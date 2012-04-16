@@ -6,7 +6,7 @@
     <artifactId>SlowChat</artifactId>
     <version>0.1</version>
     <name>SlowChat</name>
-    <description>SlowChat Plugin</description>
+    <description>Limits the amount of chat messages players can send.</description>
 
     <!-- Repository Locations -->
     <repositories>
@@ -25,7 +25,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.2.5-R0.1-SNAPSHOT</version>
+            <version>1.2.5-R1.0</version>
             <type>jar</type>
         </dependency>
     </dependencies>
