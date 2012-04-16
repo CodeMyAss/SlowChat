@@ -1,0 +1,9 @@
+name: SlowChat
+main: com.serenity.slowchat.SlowChat
+version: 0.1
+authors:
+- MonsieurApple
+commands:
+  slowchat:
+    description: Change the seconds in between messages
+    usage: /<command> <seconds>

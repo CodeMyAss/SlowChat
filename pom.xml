@@ -1,0 +1,64 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Parent Project Information -->
+    <groupId>com.serenity</groupId>
+    <artifactId>SlowChat</artifactId>
+    <version>0.1</version>
+    <name>SlowChat</name>
+    <description>SlowChat Plugin</description>
+
+    <!-- Repository Locations -->
+    <repositories>
+        <repository>
+            <id>bukkit-repo</id>
+            <url>http://repo.bukkit.org/content/groups/public</url>
+        </repository>
+        <repository>
+            <id>mvn-repo</id>
+            <url>http://repo1.maven.org/maven2</url>
+        </repository>
+    </repositories>
+
+    <!-- Dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>1.2.5-R0.1-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
+
+    <!-- Build Settings -->
+    <build>
+        <sourceDirectory>${basedir}/src</sourceDirectory>
+        <resources>
+            <resource>
+                <targetPath>.</targetPath>
+                <directory>${basedir}/src/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>config.yml</include>
+                    <include>plugin.yml</include>
+                </includes>
+            </resource>
+            <resource>
+                <targetPath>.</targetPath>
+                <directory>${basedir}/src</directory>
+            </resource>
+        </resources>
+
+        <plugins>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <version>2.0.2</version>
+              <configuration>
+                  <source>1.5</source>
+                  <target>1.5</target>
+              </configuration>
+          </plugin>
+        </plugins>
+    </build>
+</project>
