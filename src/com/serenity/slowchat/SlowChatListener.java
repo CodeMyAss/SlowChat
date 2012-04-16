@@ -1,33 +1,22 @@
 package com.serenity.slowchat;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bukkit.ChatColor;
-import org.bukkit.Server;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.*;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
-
-import java.util.Date;
+import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class SlowChatListener implements Listener {
+    private final Map<String, Long> times = new HashMap<String, Long>();
     private final SlowChat parent;
-    private final Server server;
-    private final PluginManager pm;
 
     public SlowChatListener(SlowChat parent) {
         this.parent = parent;
-        this.server = parent.getServer();
-        this.pm = this.server.getPluginManager();
-    }
-
-    @EventHandler()
-    public void onPlayerJoin(final PlayerJoinEvent event) {
-        this.parent.times.put(event.getPlayer().getName(), new Date(0));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -36,27 +25,29 @@ public class SlowChatListener implements Listener {
             return;
         }
 
+        long now = System.currentTimeMillis();
         String name = event.getPlayer().getName();
-        Date lastChat = this.parent.times.get(name);
+        Long lastChat = this.times.get(event.getPlayer().getName());
 
         if(lastChat != null) {
-            Date past = new Date(System.currentTimeMillis() - (this.parent.getConfig().getInt("interval") * 1000));
-            if(past.before(lastChat)) {
-                int timeRemaining = (int)((lastChat.getTime() - past.getTime()) / 1000) + 1;
-                event.getPlayer().sendMessage(ChatColor.RED + "You can not talk for " + String.valueOf(timeRemaining) + " more second" + (timeRemaining > 1 ? "s" : ""));
+            // earliest time this player can send another chat message
+            long earliestNext = lastChat + this.parent.getConfig().getInt("interval") * 1000;
+            if(now < earliestNext) { // if we're before that time cancel the message
+                int timeRemaining = (int)((earliestNext - now) / 1000) + 1;
+                event.getPlayer().sendMessage(ChatColor.RED + "You can not talk for " + timeRemaining + " more second" + (timeRemaining > 1 ? "s" : ""));
                 event.setCancelled(true);
                 return;
             }
         }
-        this.parent.times.put(name, new Date());
+        this.times.put(name, now);
     }
 
-    @EventHandler()
+    @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        this.parent.times.remove(event.getPlayer().getName());
+        this.times.remove(event.getPlayer().getName());
     }
 
-    @EventHandler()
+    @EventHandler
     public void onPlayerDeathEvent(PlayerDeathEvent event) {
         event.setDeathMessage(null);
     }

@@ -1,17 +1,8 @@
 package com.serenity.slowchat;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Date;
-
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SlowChat extends JavaPlugin {
-    public Map<String, Date> times = new HashMap<String, Date>();
-
     @Override
     public void onEnable() {
         // Copy the default configuration
