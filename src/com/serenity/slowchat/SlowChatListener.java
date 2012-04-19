@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 public class SlowChatListener implements Listener {
     private final Map<String, Long> times = new HashMap<String, Long>();
@@ -45,10 +46,16 @@ public class SlowChatListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         this.times.remove(event.getPlayer().getName());
+        event.setQuitMessage(null);
     }
 
     @EventHandler
     public void onPlayerDeathEvent(PlayerDeathEvent event) {
         event.setDeathMessage(null);
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        event.setJoinMessage(null);
     }
 }
