@@ -20,7 +20,7 @@ public class SlowChatCommand implements CommandExecutor {
         }
 
         if(args.length != 1) {
-            player.sendMessage(ChatColor.GOLD + "SlowChat Delay: " + ChatColor.GREEN + String.valueOf(this.parent.getConfig().getInt("interval") * 1000) + " seconds");
+            sender.sendMessage(ChatColor.GOLD + "SlowChat Delay: " + ChatColor.GREEN + String.valueOf(this.parent.getConfig().getInt("interval") * 1000) + " seconds");
             return true;
         }
 
